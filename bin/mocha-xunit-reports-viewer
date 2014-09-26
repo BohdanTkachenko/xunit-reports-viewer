@@ -1,7 +1,0 @@
-#!/usr/bin/env node
-
-require('coffee-script').register();
-require('../server.coffee')({
-  dir: process.cwd() + '/reports',
-  port: process.argv[2]
-});

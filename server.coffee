@@ -9,7 +9,7 @@ MochaXUnitTestSuite = require './lib/mocha_xunit_test_suite'
 
 module.exports = (options) ->
   app = require('express')()
-  app.set 'app name', options.name || 'mocha-xunit-reports-viewer'
+  app.set 'app name', options.name || 'xunit-reports-viewer'
   app.set 'view engine', 'hbs'
   app.set 'views', path.join(__dirname, 'views')
   app.use logger 'dev'
@@ -75,4 +75,4 @@ module.exports = (options) ->
         testSuite: suite
 
   http.createServer(app).listen app.get('port'), () ->
-    console.log "Running server on port #{app.get('port')}..."
+    console.log "Running server on http://localhost:#{app.get('port')} ..."

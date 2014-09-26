@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+var
+  path = require('path'),
+
+  DIR_REPORTS = process.cwd() + '/reports',
+  PORT = process.argv[2]
+;
+
+if (process.cwd() !== path.dirname(__dirname)) {
+  process.chdir(path.dirname(__dirname));
+  console.log('App directory: ' + process.cwd());
+}
+
+require('coffee-script').register();
+require('../server.coffee')({
+  dir: DIR_REPORTS,
+  port: PORT
+});

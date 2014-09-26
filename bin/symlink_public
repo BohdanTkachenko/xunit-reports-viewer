@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -rf public
+mkdir public
+cd public
+ln -s ../node_modules/jquery/dist jquery
+ln -s ../node_modules/bootstrap/dist bootstrap
+cd ../

@@ -1,2 +1,5 @@
 .idea
 node_modules
+public/jquery
+public/bootstrap
+npm-debug.log

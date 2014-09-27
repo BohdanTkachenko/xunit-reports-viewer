@@ -50,6 +50,11 @@
   <p><span class="glyphicon glyphicon-time"></span> Total time spent: <b>{{testSuite.timeTotalReadable}}</b></p>
 
   {{#if testSuite.totalTests}}
+    <div class="progress" style="margin-bottom: 0;">
+      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+        Total: {{testSuite.totalTests}}
+      </div>
+    </div>
     <div class="progress">
       {{#if testSuite.success}}
         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{testSuite.success}}" aria-valuemin="0" aria-valuemax="{{testSuite.totalTests}}" style="width: {{testSuite.percents.success}}%;">

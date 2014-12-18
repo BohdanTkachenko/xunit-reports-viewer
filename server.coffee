@@ -5,6 +5,7 @@ express = require 'express'
 logger = require 'morgan'
 mime = require 'mime'
 async = require 'async'
+XUnitXML = require './lib/xunit_xml'
 MochaXUnitTestSuite = require './lib/mocha_xunit_test_suite'
 
 module.exports = (options) ->
@@ -38,16 +39,18 @@ module.exports = (options) ->
       files = files.filter (fileName) ->
         mime.lookup(path.join(app.get('reports dir'), fileName)) is 'application/xml'
 
-      testSuits = files.map (fileName) -> new MochaXUnitTestSuite path.join(app.get('reports dir'), fileName)
+      xmls = files.map (fileName) -> new XUnitXML app.get('reports dir') + '/' + fileName
 
-      async.map testSuits, ((suit, next) ->
-        suit.parse (error) ->
+      async.map xmls, ((xml, next) ->
+        xml.getSuits (error, suit) ->
           next null, if error then null else suit
-      ), (error, results) ->
+      ), (error, suits) ->
         if error then return next error
 
-        results = results.filter (result) -> !!result
-        results = results.sort (a, b) ->
+        suits = [].concat.apply [], suits
+
+        results = suits.filter (result) -> !!result
+        results = suits.sort (a, b) ->
           if a.timestamp > b.timestamp
             return 1
 
@@ -57,7 +60,7 @@ module.exports = (options) ->
           return 0
 
         res.render 'testSuitsList',
-          list: results
+          list: suits
 
   app.get '/reports/:name', (req, res, next) ->
     reportFileName = "#{app.get 'reports dir'}/#{req.params.name}.xml"
@@ -67,12 +70,13 @@ module.exports = (options) ->
       res.end "Report '#{reportFileName}' was not found", 404
       return
 
-    testSuite = new MochaXUnitTestSuite reportFileName
-    testSuite.parse (error, suite) ->
+    xml = new XUnitXML reportFileName
+    xml.getSuits (error, suits) ->
       if error then return next error
 
       res.render 'testSuite',
-        testSuite: suite
+        testSuits: suits
+
 
   http.createServer(app).listen app.get('port'), () ->
     console.log "Running server on http://localhost:#{app.get('port')} ..."

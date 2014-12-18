@@ -49,58 +49,60 @@
 </div>
 
 <div class="container">
-  <h2>Test suite: {{testSuite.name}}</h2>
-  <p><span class="glyphicon glyphicon-calendar"></span> Date: <b>{{testSuite.timestampReadable}}</b></p>
-  <p><span class="glyphicon glyphicon-time"></span> Total time spent: <b>{{testSuite.timeTotalReadable}}</b></p>
+  {{#each testSuits}}
+    <h2>Test suite: {{ name }}</h2>
+    <p><span class="glyphicon glyphicon-calendar"></span> Date: <b>{{timestampReadable}}</b></p>
+    <p><span class="glyphicon glyphicon-time"></span> Total time spent: <b>{{timeTotalReadable}}</b></p>
 
-  {{#if testSuite.totalTests}}
-    <div class="progress" style="margin-bottom: 0;">
-      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-        Total: {{testSuite.totalTests}}
+    {{#if totalTests}}
+      <div class="progress" style="margin-bottom: 0;">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+          Total: {{totalTests}}
+        </div>
       </div>
-    </div>
-    <div class="progress">
-      {{#if testSuite.success}}
-        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{testSuite.success}}" aria-valuemin="0" aria-valuemax="{{testSuite.totalTests}}" style="width: {{testSuite.percents.success}}%;">
-          Success: {{testSuite.success}}
-        </div>
-      {{/if}}
-      {{#if testSuite.skipped}}
-        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{testSuite.skipped}}" aria-valuemin="0" aria-valuemax="{{testSuite.totalTests}}" style="width: {{testSuite.percents.skipped}}%;">
-            Skipped: {{testSuite.skipped}}
-        </div>
-      {{/if}}
-      {{#if testSuite.failures}}
-        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{testSuite.failures}}" aria-valuemin="0" aria-valuemax="{{testSuite.totalTests}}" style="width: {{testSuite.percents.failures}}%;">
-            Failure: {{testSuite.failures}}
-        </div>
-      {{/if}}
-    </div>
-  {{/if}}
+      <div class="progress">
+        {{#if success}}
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{success}}" aria-valuemin="0" aria-valuemax="{{totalTests}}" style="width: {{percents.success}}%;">
+            Success: {{success}}
+          </div>
+        {{/if}}
+        {{#if skipped}}
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{skipped}}" aria-valuemin="0" aria-valuemax="{{totalTests}}" style="width: {{percents.skipped}}%;">
+              Skipped: {{skipped}}
+          </div>
+        {{/if}}
+        {{#if failures}}
+          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{failures}}" aria-valuemin="0" aria-valuemax="{{totalTests}}" style="width: {{percents.failures}}%;">
+              Failure: {{failures}}
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
 
-  {{#each testSuite.pockets}}
-      <h4>{{name}}</h4>
-      <table class="table">
-        <tr>
-          <th>Name</th>
-          <th style="width: 200px;">Time</th>
-        </tr>
-        {{#each tests}}
-          <tr class="{{type}}">
-            <td>{{name}}</td>
-            <td>{{time}}s.</td>
+    {{#each pockets}}
+        <h4>{{name}}</h4>
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th style="width: 200px;">Time</th>
           </tr>
-          {{#if failure}}
-              <tr class="{{type}}">
-                <td colspan="2">
-                  <pre>
-                    {{failure}}
-                  </pre>
-                </td>
-              </tr>
-          {{/if}}
-        {{/each}}
-      </table>
+          {{#each tests}}
+            <tr class="{{type}}">
+              <td>{{name}}</td>
+              <td>{{time}}s.</td>
+            </tr>
+            {{#if failure}}
+                <tr class="{{type}}">
+                  <td colspan="2">
+                    <pre>
+                      {{failure}}
+                    </pre>
+                  </td>
+                </tr>
+            {{/if}}
+          {{/each}}
+        </table>
+    {{/each}}
   {{/each}}
 </div>
 

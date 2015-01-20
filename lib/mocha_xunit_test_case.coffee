@@ -10,8 +10,13 @@ class MochaXUnitTestCase
 
     @failure = null
     if testCase.failure
-      @failure = entities.decodeHTML testCase.failure
+      failure = testCase.failure
 
+      if typeof failure != 'string'
+        failure = testCase.failure[0]['_']
+
+      @failure = entities.decodeHTML failure
+      @failure = @failure.trim()
       @failure = new Handlebars.SafeString @failure
 
     if @skipped then @type = 'info'

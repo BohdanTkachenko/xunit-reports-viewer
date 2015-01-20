@@ -26,6 +26,8 @@ module.exports = (options) ->
   if not fs.existsSync app.get 'reports dir'
     console.log "Reports directory '#{app.get 'reports dir'}' does not exists."
     process.exit 2
+  else
+    console.log "Using reports dir: #{app.get 'reports dir'}"
 
   app.locals.name = app.get 'app name'
 

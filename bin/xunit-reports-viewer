@@ -2,18 +2,22 @@
 
 var
   path = require('path'),
-
-  DIR_REPORTS = process.cwd() + '/reports',
-  PORT = process.argv[2]
+  argv = require('minimist')(process.argv.slice(2))
 ;
+
+if (argv.h || argv.help) {
+  console.log('Usage: ' + process.argv[1] + ' [-h] [-p|--port 1234] [-r|--reports customReportsDir]');
+
+  process.exit();
+}
 
 if (process.cwd() !== path.dirname(__dirname)) {
   process.chdir(path.dirname(__dirname));
-  console.log('App directory: ' + process.cwd());
+  //console.log('App directory: ' + process.cwd());
 }
 
 require('coffee-script').register();
 require('../server.coffee')({
-  dir: DIR_REPORTS,
-  port: PORT
+  dir: path.resolve(argv.r || argv.reports || 'reports'),
+  port: argv.p || argv.port || undefined
 });

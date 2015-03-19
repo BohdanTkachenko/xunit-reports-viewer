@@ -7,10 +7,10 @@
     "test",
     "report"
   ],
-  "author": "Bohdan Tkachenko <bogus.weber@gmail.com>",
+  "author": "Bohdan Tkachenko <bohdan@tkachenko.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bogus-weber/xunit-reports-viewer.git"
+    "url": "https://github.com/BohdanTkachenko/xunit-reports-viewer.git"
   },
   "bin": {
     "xunit-viewer": "./bin/xunit-reports-viewer"
